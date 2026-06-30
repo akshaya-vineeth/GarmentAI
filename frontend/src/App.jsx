@@ -47,7 +47,7 @@ function App() {
         formData.append('garment', fileBlob, 'garment.png');
       }
 
-      const response = await fetch('http://localhost:8000/generate-prompt', {
+      const response = await fetch('https://garmentai.onrender.com/', {
         method: 'POST',
         // Note: Do not set Content-Type manually with FormData so the browser can attach the boundary
         body: formData
