@@ -5,7 +5,5 @@ python-multipart
 mistralai
 httpx
 python-dotenv
-torch
-diffusers
-transformers
-accelerate
+huggingface_hub
+gradio_client
