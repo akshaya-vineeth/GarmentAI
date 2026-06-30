@@ -16,7 +16,6 @@ function App() {
     glasses: 'None',
     accessories: [],
     hairColor: 'Black',
-    facialHair: 'None'
   });
   
   const [isGenerating, setIsGenerating] = useState(false);
@@ -47,7 +46,7 @@ function App() {
         formData.append('garment', fileBlob, 'garment.png');
       }
 
-      const response = await fetch('https://garmentai.onrender.com/', {
+      const response = await fetch('https://garmentai.onrender.com/generate-prompt', {
         method: 'POST',
         // Note: Do not set Content-Type manually with FormData so the browser can attach the boundary
         body: formData
