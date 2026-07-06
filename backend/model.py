@@ -30,7 +30,7 @@ class ImageGenerator:
         try:
             # Call the highly reliable FLUX model on the free Gradio Space
             import shutil
-            flux_client = Client("black-forest-labs/FLUX.1-dev", hf_token=self.hf_token)
+            flux_client = Client("black-forest-labs/FLUX.1-dev", token=self.hf_token)
             result = flux_client.predict(
                 prompt=prompt,
                 seed=0,
@@ -60,7 +60,7 @@ class ImageGenerator:
             if garment_path and os.path.exists(garment_path):
                 print("Applying Virtual Try-On via IDM-VTON...")
                 try:
-                    vton_client = Client("yisol/IDM-VTON", hf_token=self.hf_token)
+                    vton_client = Client("yisol/IDM-VTON", token=self.hf_token)
                     result = vton_client.predict(
                         dict={"background": handle_file(filepath), "layers": [], "composite": None},
                         garm_img=handle_file(garment_path),
