@@ -58,15 +58,8 @@ async def generate_prompt(specs: str = Form(...), garment: UploadFile = File(Non
         
         # 2. Request the image from the cloud pipeline wrapper
         saved_image_path = image_gen.generate(enhanced_prompt, garment_path)
-        
-        # 3. Check if the generation script hit an exception and returned empty
-        if not saved_image_path or saved_image_path == "":
-            raise HTTPException(
-                status_code=502, 
-                detail="Hugging Face cloud generation failed. Look at your server terminal for the exact error trace."
-            )
             
-        # Double check the file physically landed on the drive before dispatching it
+        # 3. Double check the file physically landed on the drive before dispatching it
         if not os.path.exists(saved_image_path):
             raise HTTPException(
                 status_code=404, 
@@ -83,6 +76,9 @@ async def generate_prompt(specs: str = Form(...), garment: UploadFile = File(Non
     except HTTPException as http_ex:
         # Pass handled client/gateway HTTP status exceptions straight through
         raise http_ex
+    except RuntimeError as runtime_ex:
+        print(f"❌ Generation runtime error:\n{runtime_ex}")
+        raise HTTPException(status_code=502, detail=str(runtime_ex))
     except Exception as e:
         # Capture unexpected framework anomalies without silently terminating
         print(f"❌ Internal Server Exception:")
