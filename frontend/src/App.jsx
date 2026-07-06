@@ -49,11 +49,12 @@ function App() {
         formData.append('garment', fileBlob, 'garment.png');
       }
 
-      const response = await fetch('http://127.0.0.1:8000/generate-prompt', {
+      const response = await fetch('https://garmentai-1.onrender.com/generate-prompt', {
         method: 'POST',
         // Note: Do not set Content-Type manually with FormData so the browser can attach the boundary
         body: formData
       });
+      console.log(response)
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
