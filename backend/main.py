@@ -16,13 +16,22 @@ app = FastAPI()
 # Pre-initialize our cloud API configuration structure
 image_gen.load_model()
 
+# Resolve CORS origins from env for deployment safety.
+# Example: CORS_ORIGINS=https://your-frontend.com,https://www.your-frontend.com
+cors_origins_env = os.getenv("CORS_ORIGINS", "*")
+allowed_origins = [origin.strip() for origin in cors_origins_env.split(",") if origin.strip()]
+allow_all_origins = "*" in allowed_origins
+
 # Enable CORS for the React frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=["*"] if allow_all_origins else allowed_origins,
+    # Browsers reject wildcard origin when credentials are enabled.
+    # This app does not use cookies/auth credentials from the browser.
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["X-Generated-Prompt"],
 )
 
 @app.get("/")

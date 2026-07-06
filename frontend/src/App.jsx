@@ -55,10 +55,16 @@ function App() {
         // Note: Do not set Content-Type manually with FormData so the browser can attach the boundary
         body: formData
       });
-      console.log(response)
+      console.log(response);
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        // Try to read the error detail from the FastAPI JSON response body
+        let errorDetail = `HTTP ${response.status}`;
+        try {
+          const errJson = await response.json();
+          errorDetail = errJson.detail || errorDetail;
+        } catch (_) { /* response wasn't JSON, keep the status code message */ }
+        throw new Error(errorDetail);
       }
 
       // The backend returns an image file, so we read it as a Blob
@@ -75,8 +81,9 @@ function App() {
       }
 
     } catch (error) {
-      console.error("Failed to generate prompt:", error);
-      alert("Error connecting to backend. Make sure the FastAPI server is running.");
+      console.error("Generation failed:", error);
+      // Show the real error message — not a generic one
+      alert(`Generation failed:\n\n${error.message}`);
     } finally {
       setIsGenerating(false);
     }
