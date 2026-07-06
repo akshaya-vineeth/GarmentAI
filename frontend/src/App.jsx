@@ -3,8 +3,11 @@ import Header from './components/Header';
 import GarmentUploader from './components/GarmentUploader';
 import SpecForm from './components/SpecForm';
 import ModelPreview from './components/ModelPreview';
+import IntroPage from './components/IntroPage';
 
 function App() {
+  const [showIntro, setShowIntro] = useState(true);
+
   const [image, setImage] = useState(null);
   const [specs, setSpecs] = useState({
     gender: 'Female',
@@ -76,6 +79,11 @@ function App() {
       setIsGenerating(false);
     }
   };
+
+  // ── Show intro landing page first ──
+  if (showIntro) {
+    return <IntroPage onEnter={() => setShowIntro(false)} />;
+  }
 
   return (
     <div className="app-container">
