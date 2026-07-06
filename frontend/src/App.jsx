@@ -4,6 +4,7 @@ import GarmentUploader from './components/GarmentUploader';
 import SpecForm from './components/SpecForm';
 import ModelPreview from './components/ModelPreview';
 import IntroPage from './components/IntroPage';
+import { BACKEND_URL } from './config';
 
 function App() {
   const [showIntro, setShowIntro] = useState(true);
@@ -49,7 +50,7 @@ function App() {
         formData.append('garment', fileBlob, 'garment.png');
       }
 
-      const response = await fetch('https://garmentai-1.onrender.com/generate-prompt', {
+      const response = await fetch(`${BACKEND_URL}/generate-prompt`, {
         method: 'POST',
         // Note: Do not set Content-Type manually with FormData so the browser can attach the boundary
         body: formData
