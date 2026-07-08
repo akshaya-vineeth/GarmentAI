@@ -20,6 +20,7 @@ function App() {
     glasses: 'None',
     accessories: [],
     hairColor: 'Black',
+    shotType: 'Full Length',
   });
 
   const [isGenerating, setIsGenerating] = useState(false);

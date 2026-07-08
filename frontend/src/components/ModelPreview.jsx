@@ -16,15 +16,6 @@ export default function ModelPreview({ isGenerating, resultImage, generatedPromp
           </div>
         ) : resultImage ? (
           <img src={resultImage} alt="Generated AI Model" className="generated-model" />
-        ) : generatedPrompt ? (
-          <div className="empty-preview">
-            <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: 'var(--text-main)' }}>
-              Prompt Generated Successfully
-            </h3>
-            <p style={{ maxWidth: '300px' }}>
-              Your high-level prompt has been created and is displayed below.
-            </p>
-          </div>
         ) : (
           <div className="empty-preview">
             <Camera size={64} />
@@ -38,14 +29,7 @@ export default function ModelPreview({ isGenerating, resultImage, generatedPromp
         )}
       </div>
 
-      {generatedPrompt && (
-        <div style={{ padding: '1.5rem', borderTop: '1px solid var(--panel-border)', backgroundColor: 'rgba(0,0,0,0.2)' }}>
-          <h3 style={{ fontSize: '1rem', color: 'var(--accent)', marginBottom: '0.5rem' }}>AI Agent Prompt:</h3>
-          <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: '1.5' }}>
-            {generatedPrompt}
-          </p>
-        </div>
-      )}
+
     </div>
   );
 }

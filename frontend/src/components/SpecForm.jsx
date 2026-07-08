@@ -153,13 +153,57 @@ export default function SpecForm({ specs, setSpecs, onGenerate, isGenerating, is
           </div>
         </div>
 
+        {/* Shot Type */}
+        <div className="form-group" style={{ gridColumn: '1 / -1', marginTop: '0.5rem' }}>
+          <label className="form-label">Shot Type</label>
+          <div style={{ display: 'flex', gap: '0.6rem', marginTop: '0.5rem', flexWrap: 'wrap' }}>
+            {[
+              { value: 'Full Length', label: 'Full Length', icon: '🧍' },
+              { value: '3/4 Body',    label: '3/4 Body',    icon: '🕴️' },
+              { value: 'Half Body',   label: 'Half Body',   icon: '👤' },
+              { value: 'Close-Up',    label: 'Close-Up',    icon: '🔍' },
+            ].map(({ value, label, icon }) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => setSpecs(prev => ({ ...prev, shotType: value }))}
+                style={{
+                  flex: '1 1 calc(50% - 0.6rem)',
+                  padding: '0.6rem 0.5rem',
+                  borderRadius: '10px',
+                  border: specs.shotType === value
+                    ? '2px solid var(--accent)'
+                    : '2px solid rgba(255,255,255,0.1)',
+                  background: specs.shotType === value
+                    ? 'rgba(99,102,241,0.2)'
+                    : 'rgba(255,255,255,0.04)',
+                  color: specs.shotType === value ? 'var(--accent)' : 'var(--text-muted)',
+                  cursor: 'pointer',
+                  fontSize: '0.85rem',
+                  fontWeight: specs.shotType === value ? 600 : 400,
+                  transition: 'all 0.2s ease',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.4rem',
+                }}
+              >
+                <span style={{ fontSize: '1.1rem' }}>{icon}</span>
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+
         <button 
           className="btn" 
           onClick={onGenerate}
           disabled={!isReady || isGenerating}
+          style={{ marginTop: '1.5rem' }}
         >
           {isGenerating ? 'Generating...' : 'Generate Model'}
         </button>
+
       </div>
     </div>
   );
